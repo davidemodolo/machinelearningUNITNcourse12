@@ -131,7 +131,7 @@ But it doesn’t work because $X$ is rectangular, the system of equations is ove
 
 > overdetermined = more equations than unknown.
 
-To do error minimization we use the mean squared error (the squared error is the difference between $y$ and $f(\bold x)$): $\displaystyle E(\bold w, D) = \sum_{(\bold x, y)\in D}(y - f(\bold x))^2 = (\bold y - X \bold w)^T(\bold y - X \bold w)$
+To do error minimization we can use the mean squared error (the squared error is the difference between $y$ and $f(\bold x)$): $\displaystyle E(\bold w, D) = \sum_{(\bold x, y)\in D}(y - f(\bold x))^2 = (\bold y - X \bold w)^T(\bold y - X \bold w)$
 
 where a closed form solution exists.
 
@@ -196,7 +196,7 @@ The Naïve Bayes is a _log-linear_ model (as Gaussian with shared $\Sigma$)
 
 ## Properties:
 
-- **Large Margin Classifiers**: because when they learn they separate hyperplanes (boundary between classes) and also seprating the classes with  the largest margin.
+- **Large Margin Classifiers**: because when they learn they separate hyperplanes (boundary between classes) and also separating the classes with the largest margin.
 - the solution (decision boundaries) can be expressed in few training example called support vectors
 - the error is based on margin
 - can be extended to nonlinear separation with kernel machines
@@ -237,7 +237,7 @@ The probability of test error so depends on:
 
 > it makes an upper bound of the generalization error (?)
 
-The name **hard margin** is because we require <u>all</u> examples to be at confidence margin at least one.
+The name **hard margin** is because we require <u>all</u> examples to be at confidence margin at least (in this example) one.
 
 ### Learning Problem of SVM
 
@@ -249,9 +249,9 @@ We can write it as the confidence margin should be grater than one $y_if(\bold x
 
 When you do the minimization you have to keep in account the _constraints_
 
-#### Karush-Kuhn-Tucker approach
-
 A constrained optimization problem can be addressed by converting it into an _unconstrained problem_ with the same solution.
+
+#### Karush-Kuhn-Tucker approach
 
 e.g. we have to minimize $z$ in $f(z)$ with the constraints $g_i(z)\ge0,\ \forall i$
 
@@ -371,7 +371,7 @@ In the end, substituting in the _Lagrangian_ we get: $\displaystyle L(\alpha)=\s
 
 So the **dual formulation** is
 $$
-\displaystyle \max_{\alpha\in\R^m}\quad \sum_{i-1}^m\alpha_i-\frac12\sum_{i,j=1}^m\alpha_i\alpha_jy_iy_j\bold x^T_i\bold x_j\\
+\displaystyle \max_{\alpha\in\R^m}\quad \sum_{i=1}^m\alpha_i-\frac12\sum_{i,j=1}^m\alpha_i\alpha_jy_iy_j\bold x^T_i\bold x_j\\
 \text{ subject to}\quad 0\le\alpha_i\le C, \quad i=1,...,m\\
 \sum_{i=1}^m\alpha_iy_i=0
 $$
@@ -393,12 +393,12 @@ Training of SVM is a quadratic optimization problem; if the dataset is large, to
 
 We take back the objective of SVM $\displaystyle\frac{\|\bold w\|^2}2+C\sum_{i=1}^m\xi_i = \frac{\|\bold w\|^2}2+C\sum_{i=1}^m|1-y_i(\bold w^T \bold x_i+w_0)|_+$ and changing $\displaystyle\frac mC =\lambda$ we have the _stochastic gradient descent_: $\displaystyle\min_{\bold w \in X}\frac{\lambda}{2}||\bold w||^2+\frac1m\sum_{i=1}^m|1-y_i\langle\bold w,\bold x_i\rangle|_+$
 
-Stochastic means we compute the gradient on a single example at a time: $\displaystyle(\bold x_i, y_i): E(\bold w, (\bold x_i, y_i)) = \frac{\lambda}2\|\bold w\|^2+|1-y_i\langle \bold w, \bold x_i\rangle|_+$
+Stochastic means we compute the gradient on a single example ($(\bold x_i, y_i)$) at a time: $\displaystyle E(\bold w, (\bold x_i, y_i)) = \frac{\lambda}2\|\bold w\|^2+|1-y_i\langle \bold w, \bold x_i\rangle|_+$
 
 Computing subgradient: when you don’t have gradient in a point (non derivability point), we can still find some gradients
 The **subgradient** of a function $f$ at a point $\bold x_0$ is any vector $\bold v$ such that for any $\bold x$ that this holds: $f(\bold x)-f(\bold x_0)\ge \bold v^T(\bold x-\bold x_0)$, it means you can use any of this vector as gradient in points where the derivatives doesn’t exists.
 
-Subgradient on such example = $\nabla_{\bold x}E(\bold w, (\bold x_i, y_i))=\lambda\bold w-\mathbb1[y_1\langle\bold w, \bold x_i\rangle<1]y_i\bold x_i$
+Subgradient on such example = $\nabla_{\bold w}E(\bold w, (\bold x_i, y_i))=\lambda\bold w-\mathbb1[y_1\langle\bold w, \bold x_i\rangle<1]y_i\bold x_i$
 
 > indicator function: $\mathbb1[y_1\langle\bold w, \bold x_i\rangle<1]= \begin{cases}1 &\text{if }y_i\langle\bold w, \bold x_i\rangle <1 \\ 0 &\text{otherwise}\end{cases}$
 
@@ -474,7 +474,7 @@ This allows to trade off function complexity with data fitting (playing on $\eps
 The **optimization problem is**:
 $$
 \displaystyle
-\max_{\bold w\in X, w_0\in\R, \xi,\xi^*\in\R^m}\quad
+\min_{\bold w\in X, w_0\in\R, \xi,\xi^*\in\R^m}\quad
 	\frac{\|\bold w\|^2}2+C\sum_{i=1}^m(\xi_i +\xi^*_i)\\
 	
 \text{ subject to}\quad \bold w ^T \phi(\bold x_i) + w_0-y_i\le\epsilon+\xi_i\\
@@ -520,7 +520,7 @@ $$
 
 ### Karush-Khun-Tucker conditions 
 
-In terms of support vectors, we have (iconstraints):
+In terms of support vectors, we have ($i$ constraints):
 
 - at the saddle point it holds that $\forall i$:
   $$
@@ -581,7 +581,7 @@ You can compute kernels even with objects that are not vectors, like sequences $
 
 The **Gram matrix** is a _symmetric matrix_ of the kernels between pairs of examples: $K_{ij} = k(\bold x_i, \bold x_j)\quad \forall i, j$
 
-**Positive definite** matrix: a symmetric matrix is positive definite if for any possible vector c $\displaystyle\sum_{i,j=1}^mc_ic_jK_{ij}\ge 0,\quad \forall \bold c \in \R^m$
+**Positive definite** matrix: a symmetric matrix is positive definite if for any possible vector $c$: $\displaystyle\sum_{i,j=1}^mc_ic_jK_{ij}\ge 0,\quad \forall \bold c \in \R^m$
 
 If equality <u>only</u> holds for $c = 0$, the matrix is **strictly positive definite**
 
@@ -651,7 +651,7 @@ The idea is to create a pairwise function measuring the **similarity between two
 
 Every kernel over structure is built as combination of kernels over pieces.
 
-The simplest **kernel over pieces** (of a structure) is the **delta kernel** (or _match_ kernel) $k_\delta(x,x') = \delta(x,x')=\begin{cases}1 &\text{if }x = x'\\0&\text{otherwise}\end{cases}$ where x does <u>not</u> need to be a vector
+The simplest **kernel over pieces** (of a structure) is the **delta kernel** (or _match_ kernel) $k_\delta(x,x') = \delta(x,x')=\begin{cases}1 &\text{if }x = x'\\0&\text{otherwise}\end{cases}$ where $x$ does <u>not</u> need to be a vector
 
 #### Kernel on sequeces
 
@@ -881,11 +881,11 @@ The idea: Increasing the numbers of clusters makes each cluster more homogeneous
 
    > inner cluster dissimilarity, min = with the closest cluster
 
-3. The silhouette coefficient is: $s_i=\frac{b_i-a_i}{\max(a_i, b_i)}$
+3. The silhouette coefficient is: $\displaystyle s_i=\frac{b_i-a_i}{\max(a_i, b_i)}$
 
    > the difference between the two values, normalized by the maximum
 
-Then, I run the clustering algorithm up to a certain point, I compute the silhouette for each clustering, I average it over all example and I plot it. I choose $k$ where the average silhouette coefficient is maximal
+Then, I run the clustering algorithm up to a certain point, I compute the silhouette for each clustering, I average it over all example and I plot it. 
 
 <img src="typora_img/silhouette.png" style="zoom:50%" border="0px" position="center">
 
@@ -899,7 +899,7 @@ $\to$ **Dirichlet process mixture model**
 
 ## Hierarchical clustering
 
-Up to now we took our data and divided them in $k$ clusters (flat). In many situation, data groups have a hierarchy.
+Up to now we took our data and divided them in $k$ clusters (flat). In many situations, data groups have a hierarchy.
 
 A **hierarchy** of clusters can be built in greedy ways:
 
@@ -1153,7 +1153,7 @@ Modify those algorithms to also learn the policy instead of only evaluating it.
 
 **Policy learning** requires combining _learning the environment_ and _learning the optimal policy_ for the environment: an option is to take ADP and replace the step policy evaluation with policy computation.
 
-There is a problem: The knowledge of the environment is incomplete. A greedy agent usually learns a suboptimal policy (lack of  exploration).
+There is a problem: The knowledge of the environment is incomplete. A greedy agent usually learns a suboptimal policy (lack of exploration).
 
 #### Exploration-exploitation trade-off
 
@@ -1169,7 +1169,7 @@ There is a problem: The knowledge of the environment is incomplete. A greedy age
 
     with $f$ increasing over the first argument and decreasing over the second.
 
-> probability $1-\epsilon$ is greedy, random with $\epsilon$ probability
+> probability $1-\epsilon$ is greedy, otherwise random with $\epsilon$ probability
 >
 > higher utility estimate means give a bonus if that state has not been explored much
 >
@@ -1225,13 +1225,13 @@ Another option is to not take another action and take the max current utility ac
 - SARSA is **on-policy**: it updates $Q$ using the current policy’s action
 - Q-learning is **off-policy**: it updates $Q$ using the greedy policy’s action (which is NOT the policy it uses to search)
 - Off-policy methods are _more flexible_: they can even learn from traces generated with an unknown policy
-- On-policy methods tend to _converge faster_, and are easier to use for continuous-state spaces and linear function approximators (see following slides)
+- On-policy methods tend to _converge faster_, and are easier to use for continuous-state spaces and linear function approximators
 
 >  $a’$ is decided according to the current policy. $a’$ is  not an action to do in order to reach a space, but it also used to update $Q$ (? non so da dove sia uscita questa riga)
 
 ### Function Approximation
 
-Main aspect of Deep Reinforcement Learning: until now we thought about a tabula representation of utility functions (states or utility-action pairs).
+Main aspect of Deep Reinforcement Learning: until now we thought about a tabular representation of utility functions (states or utility-action pairs).
 
 The space grows while you explore it, and sometimes the space could also be continuous.
 
@@ -1401,9 +1401,9 @@ $a$ and $b$ are not independent
 D-separation definition:
 
 - Given a generic Bayesian network
-- Given $A$, $B$, $C$ arbitrary nonintersecting sets of nodes
+- Given $A$, $B$, $C$ arbitrary non-intersecting sets of nodes
 - The sets $A$ and $B$ are _d-separated_ by $C$ ($\text{dsep}(A; B|C)$) if: all paths from any node in $A$ to any node in $B$ are blocked
-- A **path is blocked** if it includes at least one node s.t. either:
+- A **path is blocked** if it includes at least one node such that either:
   - the arrows on the path meet _tail-to-tail_ or _head-to-tail_ at the node and it is in $C$, or
   - the arrows on the path meet _head-to-head_ at the node and neither it nor any of its descendants is in $C$
 
@@ -1448,7 +1448,7 @@ So, we want a network as sparse as possible with less as few edges as possible.
 **Minimal I-maps**:
 
 - For a structure $G$ to be an I-map for $p$, it does not need to encode all its independences (e.g. a fully connected graph is an I-map of any $p$ defined over its variables)
-- A minimal I-map for p is an I-map $G$ which can’t be “reduced” into a $G_0 \subset G$ (by removing edges) that is also an I-map for $p$.
+- A minimal I-map for $p$ is an I-map $G$ which can’t be “reduced” into a $G_0 \subset G$ (by removing edges) that is also an I-map for $p$.
 
 Problem: A minimal I-map for $p$ does not necessarily capture all the independences in $p$.
 
